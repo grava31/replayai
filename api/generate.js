@@ -21,17 +21,14 @@ ${intent ? `What the user wants to say:\n${intent}` : ''}
 Write ONLY the email body — no explanation, no subject line prefix, just the reply ready to copy and send. Make it natural, ${tone.toLowerCase()}, and appropriate.`;
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const apiKey = process.env.ANTHROPIC_API_KEY;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+    const response = await fetch(url, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: prompt }]
+        contents: [{ parts: [{ text: prompt }] }]
       })
     });
 
@@ -41,7 +38,9 @@ Write ONLY the email body — no explanation, no subject line prefix, just the r
       return res.status(500).json({ error: data?.error?.message || 'AI error' });
     }
 
-    const text = data.content?.map(b => b.text || '').join('') || '';
+    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    if (!text) throw new Error('Empty response from AI.');
+
     return res.status(200).json({ reply: text });
 
   } catch (err) {
