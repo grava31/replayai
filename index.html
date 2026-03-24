@@ -1,35 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<div id="paypal-button-container-P-9TX47697DV598334PNHBKWVQ"></div>
-<script src="https://www.paypal.com/sdk/js?client-id=AZidexald6bsmunCaRrLbG7mu6DEpR6o5KgAfaAi1ubtIEPXnyrpRJt14ro4wL3a0TNH6nL1voWSUIkV&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
-<script>
-  paypal.Buttons({
-      style: {
-          shape: 'rect',
-          color: 'gold',
-          layout: 'vertical',
-          label: 'subscribe'
-      },
-      createSubscription: function(data, actions) {
-        return actions.subscription.create({
-          /* Creates the subscription */
-          plan_id: 'P-9TX47697DV598334PNHBKWVQ'
-        });
-      },
-      onApprove: function(data, actions) {
-        alert(data.subscriptionID); // You can add optional success message for the subscriber here
-      }
-  }).render('#paypal-button-container-P-9TX47697DV598334PNHBKWVQ'); // Renders the PayPal button
-</script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ReplyAI — Write professional emails instantly</title>
-<a href="privacy.html">privacy</a>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<title>ReplyAI — Professional Email Replies, Instantly</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
     --bg: #F7F5F0;
     --surface: #FFFFFF;
@@ -40,394 +17,187 @@
     --accent-light: #F0EDE7;
     --success: #3B6D11;
     --success-bg: #EAF3DE;
-    --danger: #A32D2D;
-    --danger-bg: #FCEBEB;
     --radius: 12px;
     --radius-sm: 8px;
   }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 400; line-height: 1.6; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 400;
-    min-height: 100vh;
-    line-height: 1.6;
-  }
-
-  header {
-    padding: 2.5rem 1.5rem 0;
-    text-align: center;
-    animation: fadeUp 0.6s ease both;
-  }
-
-  .logo {
-    font-family: 'DM Serif Display', serif;
-    font-size: 2.2rem;
-    letter-spacing: -0.02em;
-    color: var(--text);
-    margin-bottom: 0.5rem;
-  }
-
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2rem; max-width: 900px; margin: 0 auto; }
+  .logo { font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: var(--text); text-decoration: none; }
   .logo span { color: var(--muted); }
+  .nav-link { font-size: 14px; color: var(--muted); text-decoration: none; transition: color 0.15s; }
+  .nav-link:hover { color: var(--text); }
 
-  .tagline {
-    font-size: 15px;
-    color: var(--muted);
-    font-weight: 300;
-    margin-bottom: 2.5rem;
-  }
+  .hero { text-align: center; padding: 5rem 1.5rem 4rem; max-width: 700px; margin: 0 auto; animation: fadeUp 0.7s ease both; }
+  .hero-badge { display: inline-block; background: var(--accent-light); border: 1px solid var(--border); border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 500; color: var(--muted); margin-bottom: 1.5rem; letter-spacing: 0.04em; }
+  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.2rem, 6vw, 3.5rem); line-height: 1.15; color: var(--text); margin-bottom: 1.2rem; letter-spacing: -0.02em; }
+  .hero h1 em { font-style: italic; color: var(--muted); }
+  .hero p { font-size: 17px; color: var(--muted); font-weight: 300; max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.7; }
+  .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary { padding: 14px 28px; background: var(--accent); color: #fff; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; text-decoration: none; transition: opacity 0.15s; display: inline-block; }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-secondary { padding: 14px 28px; background: transparent; color: var(--text); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 15px; font-weight: 400; font-family: 'DM Sans', sans-serif; cursor: pointer; text-decoration: none; transition: background 0.15s; display: inline-block; }
+  .btn-secondary:hover { background: var(--accent-light); }
 
-  .container {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 0 1.5rem 4rem;
-  }
+  .section { max-width: 900px; margin: 0 auto; padding: 4rem 1.5rem; }
+  .section-label { font-size: 11px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; text-align: center; }
+  .section-title { font-family: 'DM Serif Display', serif; font-size: clamp(1.6rem, 4vw, 2.2rem); text-align: center; margin-bottom: 3rem; line-height: 1.2; }
 
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.5rem;
-    margin-bottom: 1rem;
-    animation: fadeUp 0.6s ease both;
-  }
+  .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+  .step-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
+  .step-number { width: 32px; height: 32px; border-radius: 50%; background: var(--accent-light); color: var(--text); font-size: 13px; font-weight: 500; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
+  .step-card h3 { font-size: 15px; font-weight: 500; margin-bottom: 6px; }
+  .step-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
 
-  .card:nth-child(1) { animation-delay: 0.1s; }
-  .card:nth-child(2) { animation-delay: 0.2s; }
-  .card:nth-child(3) { animation-delay: 0.3s; }
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+  .feature-item { display: flex; align-items: flex-start; gap: 12px; padding: 1.2rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+  .feature-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-top: 6px; flex-shrink: 0; }
+  .feature-item h4 { font-size: 14px; font-weight: 500; margin-bottom: 3px; }
+  .feature-item p { font-size: 13px; color: var(--muted); }
 
-  .step-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
-  }
+  .divider { border: none; border-top: 1px solid var(--border); max-width: 900px; margin: 0 auto; }
 
-  .step-num {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: var(--accent-light);
-    color: var(--text);
-    font-size: 12px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
+  .pricing-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 2.5rem; max-width: 420px; margin: 0 auto; text-align: center; }
+  .pricing-badge { display: inline-block; background: var(--accent); color: #fff; border-radius: 20px; padding: 4px 12px; font-size: 11px; font-weight: 500; letter-spacing: 0.05em; margin-bottom: 1.2rem; }
+  .pricing-price { font-family: 'DM Serif Display', serif; font-size: 3rem; color: var(--text); line-height: 1; margin-bottom: 0.3rem; }
+  .pricing-price span { font-family: 'DM Sans', sans-serif; font-size: 1rem; color: var(--muted); font-weight: 300; }
+  .pricing-desc { font-size: 14px; color: var(--muted); margin-bottom: 1.5rem; }
+  .pricing-features { list-style: none; margin-bottom: 2rem; text-align: left; }
+  .pricing-features li { font-size: 14px; color: var(--text); padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+  .pricing-features li:last-child { border-bottom: none; }
+  .check { width: 16px; height: 16px; border-radius: 50%; background: var(--success-bg); color: var(--success); font-size: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .free-note { font-size: 12px; color: var(--muted); margin-top: 1rem; }
+  .paypal-wrapper { border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 0.5rem; }
 
-  .step-label {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text);
-  }
+  footer { text-align: center; padding: 2rem 1.5rem 3rem; border-top: 1px solid var(--border); margin-top: 4rem; }
+  footer .logo { font-size: 1.2rem; display: block; margin-bottom: 0.8rem; }
+  .footer-links { display: flex; gap: 1.5rem; justify-content: center; margin-bottom: 1rem; }
+  .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; }
+  .footer-links a:hover { color: var(--text); }
+  .footer-copy { font-size: 12px; color: var(--muted); }
 
-  textarea {
-    width: 100%;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 12px 14px;
-    font-size: 14px;
-    font-family: 'DM Sans', sans-serif;
-    color: var(--text);
-    background: var(--bg);
-    resize: vertical;
-    line-height: 1.7;
-    transition: border-color 0.15s;
-  }
-
-  textarea:focus { outline: none; border-color: var(--accent); }
-  textarea::placeholder { color: var(--muted); }
-
-  .settings-row {
-    display: flex;
-    gap: 12px;
-  }
-
-  .setting-group { flex: 1; }
-
-  .setting-group label {
-    display: block;
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 6px;
-  }
-
-  select {
-    width: 100%;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 10px 12px;
-    font-size: 14px;
-    font-family: 'DM Sans', sans-serif;
-    color: var(--text);
-    background: var(--bg);
-    cursor: pointer;
-    transition: border-color 0.15s;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888780' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    padding-right: 32px;
-  }
-
-  select:focus { outline: none; border-color: var(--accent); }
-
-  .btn-generate {
-    width: 100%;
-    padding: 14px;
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    border-radius: var(--radius-sm);
-    font-size: 15px;
-    font-weight: 500;
-    font-family: 'DM Sans', sans-serif;
-    cursor: pointer;
-    transition: opacity 0.15s, transform 0.1s;
-    margin-top: 0.5rem;
-    animation: fadeUp 0.6s 0.4s ease both;
-  }
-
-  .btn-generate:hover { opacity: 0.88; }
-  .btn-generate:active { transform: scale(0.99); }
-  .btn-generate:disabled { opacity: 0.4; cursor: not-allowed; }
-
-  .spinner {
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    border: 2px solid rgba(255,255,255,0.4);
-    border-top-color: #fff;
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    vertical-align: middle;
-    margin-right: 6px;
-  }
-
-  @keyframes spin { to { transform: rotate(360deg); } }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .result-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.5rem;
-    margin-top: 1rem;
-    display: none;
-    animation: fadeUp 0.4s ease both;
-  }
-
-  .result-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 12px;
-  }
-
-  .result-title {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-
-  .result-body {
-    font-size: 14px;
-    line-height: 1.85;
-    color: var(--text);
-    white-space: pre-wrap;
-    background: var(--bg);
-    border-radius: var(--radius-sm);
-    padding: 1rem 1.25rem;
-    border: 1px solid var(--border);
-  }
-
-  .result-actions {
-    display: flex;
-    gap: 8px;
-    margin-top: 12px;
-  }
-
-  .btn-action {
-    padding: 8px 18px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    font-size: 13px;
-    font-family: 'DM Sans', sans-serif;
-    cursor: pointer;
-    background: transparent;
-    color: var(--text);
-    transition: background 0.1s, border-color 0.1s;
-    font-weight: 400;
-  }
-
-  .btn-action:hover { background: var(--accent-light); border-color: var(--accent); }
-
-  .btn-action.copied {
-    color: var(--success);
-    border-color: var(--success);
-    background: var(--success-bg);
-  }
-
-  .error-box {
-    background: var(--danger-bg);
-    border: 1px solid #F09595;
-    border-radius: var(--radius-sm);
-    padding: 10px 14px;
-    font-size: 13px;
-    color: var(--danger);
-    margin-top: 10px;
-    display: none;
-  }
-
-  footer {
-    text-align: center;
-    font-size: 12px;
-    color: var(--muted);
-    padding-bottom: 2rem;
-  }
-
-  @media (max-width: 480px) {
-    .settings-row { flex-direction: column; }
-    .logo { font-size: 1.8rem; }
-  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 480px) { .hero-btns { flex-direction: column; align-items: center; } .pricing-card { padding: 1.5rem; } }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="logo">Reply<span>AI</span></div>
-  <p class="tagline">Write professional emails instantly — no stress, no mistakes.</p>
-</header>
+<nav>
+  <a href="/" class="logo">Reply<span>AI</span></a>
+  <a href="#pricing" class="nav-link">Pricing</a>
+</nav>
 
-<div class="container">
-
-  <div class="card">
-    <div class="step-row">
-      <div class="step-num">1</div>
-      <div class="step-label">Email you received</div>
-    </div>
-    <textarea id="received-email" rows="5" placeholder="Paste the email here... (optional if you just want to write one from scratch)"></textarea>
+<section class="hero">
+  <div class="hero-badge">Chrome Extension for Gmail</div>
+  <h1>Write professional emails <em>without the stress</em></h1>
+  <p>ReplyAI reads your email in Gmail, understands the context, and writes a perfect professional reply in seconds — in English, French, or Arabic.</p>
+  <div class="hero-btns">
+    <a href="#pricing" class="btn-primary">Get started — $5/month</a>
+    <a href="#how" class="btn-secondary">See how it works</a>
   </div>
+</section>
 
-  <div class="card">
-    <div class="step-row">
-      <div class="step-num">2</div>
-      <div class="step-label">What do you want to say?</div>
-    </div>
-    <textarea id="intent" rows="3" placeholder="Describe in simple words what you want to reply... e.g. I want to accept but ask to move to Thursday"></textarea>
-  </div>
+<hr class="divider"/>
 
-  <div class="card">
-    <div class="step-row">
-      <div class="step-num">3</div>
-      <div class="step-label">Settings</div>
+<section class="section" id="how">
+  <p class="section-label">How it works</p>
+  <h2 class="section-title">Three steps, zero effort</h2>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-number">1</div>
+      <h3>Open any email</h3>
+      <p>Open an email in Gmail that you need to reply to.</p>
     </div>
-    <div class="settings-row">
-      <div class="setting-group">
-        <label>Language</label>
-        <select id="lang">
-          <option value="English">English</option>
-          <option value="French">French</option>
-          <option value="Arabic">Arabic</option>
-        </select>
-      </div>
-      <div class="setting-group">
-        <label>Tone</label>
-        <select id="tone">
-          <option value="Professional">Professional</option>
-          <option value="Formal">Formal</option>
-          <option value="Friendly but professional">Friendly</option>
-          <option value="Concise and direct">Concise</option>
-        </select>
-      </div>
+    <div class="step-card">
+      <div class="step-number">2</div>
+      <h3>Click ReplyAI</h3>
+      <p>Click the extension icon. It automatically reads and understands the email.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-number">3</div>
+      <h3>Get your reply</h3>
+      <p>Tell it what you want to say in simple words. Get a polished professional reply instantly.</p>
     </div>
   </div>
+</section>
 
-  <button class="btn-generate" id="gen-btn" onclick="generateReply()">Generate my reply</button>
-  <div class="error-box" id="error-msg"></div>
+<hr class="divider"/>
 
-  <div class="result-card" id="result-card">
-    <div class="result-header">
-      <span class="result-title">Your professional reply</span>
+<section class="section">
+  <p class="section-label">Features</p>
+  <h2 class="section-title">Everything you need</h2>
+  <div class="features-grid">
+    <div class="feature-item">
+      <div class="feature-dot"></div>
+      <div><h4>Works directly in Gmail</h4><p>No copy-pasting. The extension reads your email automatically.</p></div>
     </div>
-    <div class="result-body" id="result-text"></div>
-    <div class="result-actions">
-      <button class="btn-action" id="copy-btn" onclick="copyText()">Copy</button>
-      <button class="btn-action" onclick="generateReply()">Regenerate</button>
+    <div class="feature-item">
+      <div class="feature-dot"></div>
+      <div><h4>3 languages</h4><p>Generate replies in English, French, or Arabic.</p></div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-dot"></div>
+      <div><h4>4 tones</h4><p>Professional, Formal, Friendly, or Concise — you choose.</p></div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-dot"></div>
+      <div><h4>One click copy</h4><p>Copy your reply instantly and paste it into Gmail.</p></div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-dot"></div>
+      <div><h4>No data stored</h4><p>Your emails are never saved or shared. Full privacy.</p></div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-dot"></div>
+      <div><h4>Powered by AI</h4><p>Uses advanced AI to write natural, context-aware replies.</p></div>
     </div>
   </div>
+</section>
 
-  <br/>
-  <footer>Powered by AI &mdash; ReplyAI</footer>
-</div>
+<hr class="divider"/>
 
+<section class="section" id="pricing">
+  <p class="section-label">Pricing</p>
+  <h2 class="section-title">Simple, honest pricing</h2>
+  <div class="pricing-card">
+    <div class="pricing-badge">PRO</div>
+    <div class="pricing-price">$5 <span>/ month</span></div>
+    <p class="pricing-desc">Everything you need to write perfect emails.</p>
+    <ul class="pricing-features">
+      <li><div class="check">✓</div> Unlimited email replies</li>
+      <li><div class="check">✓</div> Works directly in Gmail</li>
+      <li><div class="check">✓</div> English, French & Arabic</li>
+      <li><div class="check">✓</div> 4 professional tones</li>
+      <li><div class="check">✓</div> No data stored</li>
+    </ul>
+    <div class="paypal-wrapper">
+      <div id="paypal-button-container-P-9TX47697DV598334PNHBKWVQ"></div>
+    </div>
+    <p class="free-note">Cancel anytime. No hidden fees.</p>
+  </div>
+</section>
+
+<footer>
+  <a href="/" class="logo">Reply<span>AI</span></a>
+  <div class="footer-links">
+    <a href="/privacy.html">Privacy Policy</a>
+    <a href="#how">How it works</a>
+    <a href="#pricing">Pricing</a>
+  </div>
+  <p class="footer-copy">© 2026 ReplyAI. All rights reserved.</p>
+</footer>
+
+<script src="https://www.paypal.com/sdk/js?client-id=AZidexald6bsmunCaRrLbG7mu6DEpR6o5KgAfaAi1ubtIEPXnyrpRJt14ro4wL3a0TNH6nL1voWSUIkV&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
 <script>
-async function generateReply() {
-  const email = document.getElementById('received-email').value.trim();
-  const intent = document.getElementById('intent').value.trim();
-  const lang = document.getElementById('lang').value;
-  const tone = document.getElementById('tone').value;
-  const btn = document.getElementById('gen-btn');
-  const resultCard = document.getElementById('result-card');
-  const resultText = document.getElementById('result-text');
-  const errorMsg = document.getElementById('error-msg');
-
-  errorMsg.style.display = 'none';
-
-  if (!email && !intent) {
-    errorMsg.textContent = 'Please fill in at least one field.';
-    errorMsg.style.display = 'block';
-    return;
-  }
-
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span>Generating...';
-  resultCard.style.display = 'none';
-
-  try {
-    const res = await fetch('/api/generate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, intent, lang, tone })
-    });
-
-    const data = await res.json();
-
-    if (!res.ok || data.error) throw new Error(data.error || 'Something went wrong.');
-
-    resultText.textContent = data.reply;
-    resultCard.style.display = 'block';
-    resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-  } catch (err) {
-    errorMsg.textContent = 'Error: ' + err.message;
-    errorMsg.style.display = 'block';
-  }
-
-  btn.disabled = false;
-  btn.innerHTML = 'Generate my reply';
-}
-
-function copyText() {
-  const text = document.getElementById('result-text').textContent;
-  const btn = document.getElementById('copy-btn');
-  navigator.clipboard.writeText(text).then(() => {
-    btn.textContent = 'Copied!';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
-  });
-}
+  paypal.Buttons({
+    style: { shape: 'rect', color: 'black', layout: 'vertical', label: 'subscribe' },
+    createSubscription: function(data, actions) {
+      return actions.subscription.create({ plan_id: 'P-9TX47697DV598334PNHBKWVQ' });
+    },
+    onApprove: function(data, actions) {
+      alert('Thank you for subscribing! Your subscription ID is: ' + data.subscriptionID);
+    }
+  }).render('#paypal-button-container-P-9TX47697DV598334PNHBKWVQ');
 </script>
 </body>
 </html>
