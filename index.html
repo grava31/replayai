@@ -1,9 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<div id="paypal-button-container-P-9TX47697DV598334PNHBKWVQ"></div>
+<script src="https://www.paypal.com/sdk/js?client-id=AZidexald6bsmunCaRrLbG7mu6DEpR6o5KgAfaAi1ubtIEPXnyrpRJt14ro4wL3a0TNH6nL1voWSUIkV&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
+<script>
+  paypal.Buttons({
+      style: {
+          shape: 'rect',
+          color: 'gold',
+          layout: 'vertical',
+          label: 'subscribe'
+      },
+      createSubscription: function(data, actions) {
+        return actions.subscription.create({
+          /* Creates the subscription */
+          plan_id: 'P-9TX47697DV598334PNHBKWVQ'
+        });
+      },
+      onApprove: function(data, actions) {
+        alert(data.subscriptionID); // You can add optional success message for the subscriber here
+      }
+  }).render('#paypal-button-container-P-9TX47697DV598334PNHBKWVQ'); // Renders the PayPal button
+</script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>ReplyAI — Write professional emails instantly</title>
+<a href="privacy.html">privacy</a>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
