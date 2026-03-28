@@ -43,6 +43,16 @@ export default async function handler(req, res) {
       }
     }
 
+    // ── Handle subscription created ──
+    if (eventType === 'BILLING.SUBSCRIPTION.CREATED') {
+      const subscriberEmail = event?.resource?.subscriber?.email_address;
+      const planId = event?.resource?.plan_id;
+      if (subscriberEmail) {
+        await updateSubscription(subscriberEmail, 'active', planId);
+        console.log('Subscription created for:', subscriberEmail);
+      }
+    }
+
     // ── Handle subscription cancelled ──
     if (eventType === 'BILLING.SUBSCRIPTION.CANCELLED') {
       const subscriberEmail = event?.resource?.subscriber?.email_address;
@@ -58,6 +68,27 @@ export default async function handler(req, res) {
       if (subscriberEmail) {
         await updateSubscription(subscriberEmail, 'inactive', null);
         console.log('Subscription expired for:', subscriberEmail);
+      }
+    }
+
+    // ── Handle subscription re-activated ──
+    if (eventType === 'BILLING.SUBSCRIPTION.RE-ACTIVATED') {
+      const subscriberEmail = event?.resource?.subscriber?.email_address;
+      const planId = event?.resource?.plan_id;
+      if (subscriberEmail) {
+        await updateSubscription(subscriberEmail, 'active', planId);
+        console.log('Subscription re-activated for:', subscriberEmail);
+      }
+    }
+
+    // ── Handle subscription updated ──
+    if (eventType === 'BILLING.SUBSCRIPTION.UPDATED') {
+      const subscriberEmail = event?.resource?.subscriber?.email_address;
+      const status = event?.resource?.status;
+      if (subscriberEmail) {
+        const newStatus = (status === 'ACTIVE') ? 'active' : 'inactive';
+        await updateSubscription(subscriberEmail, newStatus, null);
+        console.log('Subscription updated for:', subscriberEmail, '→', newStatus);
       }
     }
 
