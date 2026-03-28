@@ -2,10 +2,12 @@
   "version": 2,
   "builds": [
     { "src": "*.html", "use": "@vercel/static" },
-    { "src": "api/generate.js", "use": "@vercel/node" }
+    { "src": "api/generate.js", "use": "@vercel/node" },
+    { "src": "api/webhook.js", "use": "@vercel/node" }
   ],
   "routes": [
     { "src": "/api/generate", "dest": "/api/generate.js" },
+    { "src": "/api/webhook", "dest": "/api/webhook.js" },
     { "src": "/privacy", "dest": "/privacy.html" },
     { "src": "/privacy.html", "dest": "/privacy.html" },
     { "src": "/", "dest": "/index.html" }
