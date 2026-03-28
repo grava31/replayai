@@ -77,6 +77,21 @@
   .footer-copy { font-size: 12px; color: var(--muted); }
 
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  /* Email modal for post-payment activation */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 999; align-items: center; justify-content: center; }
+  .modal-overlay.show { display: flex; }
+  .modal-box { background: var(--surface); border-radius: var(--radius); padding: 2rem; max-width: 400px; width: 90%; text-align: center; animation: fadeUp 0.3s ease both; }
+  .modal-box h3 { font-family: 'DM Serif Display', serif; font-size: 1.4rem; margin-bottom: 0.5rem; }
+  .modal-box p { font-size: 14px; color: var(--muted); margin-bottom: 1.2rem; }
+  .modal-input { width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 15px; font-family: 'DM Sans', sans-serif; margin-bottom: 10px; }
+  .modal-input:focus { outline: none; border-color: var(--accent); }
+  .modal-btn { width: 100%; padding: 13px; background: var(--accent); color: #fff; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; }
+  .modal-btn:hover { opacity: 0.85; }
+  .modal-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .modal-msg { font-size: 13px; margin-top: 10px; }
+  .modal-msg.success { color: var(--success); }
+  .modal-msg.error { color: #A32D2D; }
+
   @media (max-width: 480px) { .hero-btns { flex-direction: column; align-items: center; } .pricing-card { padding: 1.5rem; } }
 </style>
 </head>
@@ -187,17 +202,73 @@
   <p class="footer-copy">© 2026 ReplyAI. All rights reserved.</p>
 </footer>
 
+<div class="modal-overlay" id="email-modal">
+  <div class="modal-box">
+    <h3>Activate your subscription</h3>
+    <p>Enter the email you use in Gmail (or your webmail) so we can activate your ReplyAI access.</p>
+    <input type="email" class="modal-input" id="activate-email" placeholder="you@example.com" />
+    <button class="modal-btn" id="activate-btn">Activate</button>
+    <p class="modal-msg" id="activate-msg"></p>
+  </div>
+</div>
+
 <script src="https://www.paypal.com/sdk/js?client-id=AZidexald6bsmunCaRrLbG7mu6DEpR6o5KgAfaAi1ubtIEPXnyrpRJt14ro4wL3a0TNH6nL1voWSUIkV&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
 <script>
+  let paypalSubscriptionID = '';
+
   paypal.Buttons({
     style: { shape: 'rect', color: 'black', layout: 'vertical', label: 'subscribe' },
     createSubscription: function(data, actions) {
       return actions.subscription.create({ plan_id: 'P-9TX47697DV598334PNHBKWVQ' });
     },
     onApprove: function(data, actions) {
-      alert('Thank you for subscribing! Your subscription ID is: ' + data.subscriptionID);
+      paypalSubscriptionID = data.subscriptionID;
+      document.getElementById('email-modal').classList.add('show');
     }
   }).render('#paypal-button-container-P-9TX47697DV598334PNHBKWVQ');
+
+  document.getElementById('activate-btn').addEventListener('click', async function() {
+    const emailInput = document.getElementById('activate-email');
+    const msg = document.getElementById('activate-msg');
+    const btn = this;
+    const email = emailInput.value.trim();
+
+    if (!email || !email.includes('@')) {
+      msg.className = 'modal-msg error';
+      msg.textContent = 'Please enter a valid email address.';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Activating...';
+    msg.textContent = '';
+
+    try {
+      const res = await fetch('https://replayai.vercel.app/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'activate_subscription',
+          email: email,
+          paypal_plan_id: paypalSubscriptionID
+        })
+      });
+      const data = await res.json();
+      if (!res.ok || data.error) throw new Error(data.error || 'Activation failed.');
+
+      msg.className = 'modal-msg success';
+      msg.textContent = 'Subscription activated! You can now use the extension.';
+      setTimeout(() => {
+        document.getElementById('email-modal').classList.remove('show');
+      }, 3000);
+    } catch (err) {
+      msg.className = 'modal-msg error';
+      msg.textContent = 'Error: ' + err.message;
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'Activate';
+  });
 </script>
 </body>
 </html>
